@@ -128,6 +128,12 @@ export default function HamburgueriaApp() {
 
       <h1 className="text-3xl font-bold mb-6 text-orange-500 text-center">Cardápio</h1>
 
+      <div className="mb-6 p-4 bg-[#2c2c2c] border-l-4 border-orange-500 text-orange-300 rounded">
+  <strong>📍 Entrega grátis até 3km</strong><br />
+  Para distâncias maiores, a taxa será informada após consulta.
+</div>
+
+
       <div className="fixed top-4 right-4 z-50 space-y-2">
         {alerts.map((alert) => (
           <div key={alert.id} className="bg-green-600 text-white px-4 py-2 rounded shadow-md animate-bounce">
