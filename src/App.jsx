@@ -78,7 +78,7 @@ export default function HamburgueriaApp() {
     }
     const phone = "5511976350752";
     const itemList = cart.map((item) => `- ${item.name} x${item.quantity || 1} (R$${(item.price * (item.quantity || 1)).toFixed(2)})`).join("%0A");
-    const message = `Olá, gostaria de fazer um pedido:%0A${itemList}%0A%0ATotal: R$${getTotal().toFixed(2)}%0A%0ANome: ${name}%0AEndereço: ${address}%0AObservações: ${notes}%0AForma de pagamento: ${payment}${payment === 'Dinheiro' && change ? `%0ATroco para: R$${change}` : ''}${payment === 'Pix' && pixReceipt ? `%0AComprovante PIX: Enviado como imagem.` : ''}`;
+    const message = `Olá, gostaria de fazer um pedido:\n %0A${itemList}%0A%0ATotal: R$${getTotal().toFixed(2)}%0A%0ANome: ${name}%0AEndereço: ${address}%0AObservações: ${notes}%0AForma de pagamento: ${payment}${payment === 'Dinheiro' && change ? `%0ATroco para: R$${change}` : ''}${payment === 'Pix' && pixReceipt ? `%0AComprovante PIX: Enviado como imagem.` : ''}`;
     window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
   };
 
