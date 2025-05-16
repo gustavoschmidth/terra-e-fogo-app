@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 const categorizedMenu = {
-  Lanches: [
+  "Lanches": [
     { id: 3, name: "Saladão Brutal", price: 19.99, image: "/images/saladao.jpg", description: "Pão brioche, burger 120gr, queijo, alface americano, cebola roxa, mayo" },
     { id: 22, name: "X Clássico burguer", price: 19.0, image: "/images/x_classico.jpg", description: "Pão brioche, burger 120gr, queijo prato, mayo" },
     { id: 21, name: "Mega Chedder melt", price: 25.0, image: "/images/mega_chedder.jpg", description: "Pão brioche, burger 120gr, queijo cheddar, molho cheddar" },
@@ -9,17 +9,17 @@ const categorizedMenu = {
     { id: 20, name: "SMASH TURBO", price: 38.0, image: "/images/smash_turbo.jpg", description: "Pão brioche, 2 burger 120gr turbo, queijo cheddar, cebola caramelizada, picles, mayo" },
     { id: 23, name: "Burguer terra e fogo", price: 39.0, image: "/images/terra_fogo.jpg", description: "Pão brioche, burger 120gr, queijo cheddar, bacon, onion rings, molho barbecue" }
   ],
-  Combos: [
+  "Combos": [
     { id: 4, name: "Combo 1 (Smash, Batata P, Refri 350ml)", price: 42.99, image: "/images/combo1.jpg", description: "Lanche smash burguer, batata individual pequena, refrigerante lata 350ml" },
     { id: 5, name: "Combo 2 (Explosão Suína, Batata P, Refri 350ml)", price: 47.00, image: "/images/combo2.jpg", description: "Lanche explosão suína, batata individual pequena, refrigerante lata 350ml" },
     { id: 6, name: "Combo 3 (Saladão Brutal, Batata P, Refri 350ml)", price: 32.00, image: "/images/combo3.jpg", description: "Lanche saladão brutal, batata individual pequena, refrigerante lata 350ml" }
   ],
-  Porções: [
+  "Porções": [
     { id: 7, name: "Batata Frita P", price: 10.00, image: "/images/batata_p.jpg", description: "Porção individual pequena de batata frita" },
     { id: 8, name: "Batata Frita G", price: 20.00, image: "/images/batata_g.jpg", description: "Porção grande de batata frita para compartilhar" },
     { id: 9, name: "Batata Frita G c/ Cheddar e Bacon", price: 34.99, image: "/images/batata_cheddar.jpg", description: "Batata grande com cobertura de cheddar cremoso e bacon crocante" }
   ],
-  Bebidas: [
+  "Bebidas": [
     { id: 10, name: "Coca-Cola Lata 350ml", price: 5.00, image: "/images/coca.jpg" },
     { id: 14, name: "Coca-Cola Zero Lata 350ml", price: 5.00, image: "/images/coca_zero.jpg" },
     { id: 12, name: "Fanta Laranja Lata 350ml", price: 5.00, image: "/images/fanta_laranja.jpg" },
@@ -27,7 +27,7 @@ const categorizedMenu = {
     { id: 11, name: "Guaraná Antarctica Lata 350ml", price: 5.00, image: "/images/guarana.jpg" },
     { id: 15, name: "Pepsi Lata 350ml", price: 5.00, image: "/images/pepsi.jpg" }
   ],
-  Adicionais: [
+  "Adicionais": [
     { id: 14, name: "Adicional: Cheddar", price: 5.00, image: "/images/cheddar.jpg" },
     { id: 15, name: "Adicional: Cebola caramelizada", price: 5.00, image: "/images/cebola.jpg" },
     { id: 16, name: "Adicional: Bacon", price: 5.00, image: "/images/bacon.jpg" },
@@ -49,6 +49,7 @@ export default function HamburgueriaApp() {
   const [showConfirmClear, setShowConfirmClear] = useState(false);
   const [showPixKey, setShowPixKey] = useState(false);
   const [pixReceipt, setPixReceipt] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const pixKey = "terraefogoburguer@gmail.com";
 
@@ -120,20 +121,15 @@ export default function HamburgueriaApp() {
   return (
     <div className="p-6 max-w-2xl mx-auto bg-[#1a1a1a] text-white font-sans rounded-xl shadow-lg">
       <div className="flex justify-center mb-6">
-        <img
-          src="/images/Terra.jpg"
-          alt="Logo Terra & Fogo"
-          className="h-28 sm:h-32 md:h-36 w-auto rounded-full border-4 border-orange-500 shadow-lg object-cover transition-transform duration-300 hover:scale-105"
-        />
+        <img src="/images/Terra.jpg" alt="Logo Terra & Fogo" className="h-28 sm:h-32 md:h-36 w-auto rounded-full border-4 border-orange-500 shadow-lg object-cover transition-transform duration-300 hover:scale-105" />
       </div>
 
       <h1 className="text-3xl font-bold mb-6 text-orange-500 text-center">Cardápio</h1>
 
       <div className="mb-6 p-4 bg-[#2c2c2c] border-l-4 border-orange-500 text-orange-300 rounded">
-  <strong>📍 Entrega grátis até 3km</strong><br />
-  Para distâncias maiores, a taxa será informada após consulta.
-</div>
-
+        <strong>📍 Entrega grátis até 3km</strong><br />
+        Para distâncias maiores, a taxa será informada após consulta.
+      </div>
 
       <div className="fixed top-4 right-4 z-50 space-y-2">
         {alerts.map((alert) => (
@@ -152,7 +148,8 @@ export default function HamburgueriaApp() {
                 <img
                   src={item.image}
                   alt={item.name}
-                  className="w-full h-48 object-contain bg-black rounded-xl mb-2 transition-transform duration-300 ease-in-out hover:scale-105 border-2 border-white"
+                  onClick={() => setSelectedImage(item.image)}
+                  className="w-full h-48 object-contain bg-black rounded-xl mb-2 transition-transform duration-300 ease-in-out hover:scale-105 border-2 border-white cursor-pointer"
                   loading="lazy"
                 />
                 <div className="font-semibold text-lg text-orange-400">{item.name}</div>
@@ -176,6 +173,25 @@ export default function HamburgueriaApp() {
         </div>
       ))}
 
+      {selectedImage && (
+        <div className="fixed inset-0 bg-black bg-opacity-80 z-50 flex items-center justify-center">
+          <div className="relative">
+            <button
+              onClick={() => setSelectedImage(null)}
+              className="absolute top-0 right-0 text-white bg-red-600 hover:bg-red-700 rounded-full w-8 h-8 flex items-center justify-center text-xl font-bold z-50"
+            >
+              ×
+            </button>
+            <img
+              src={selectedImage}
+              alt="Imagem ampliada"
+              className="max-w-full max-h-screen rounded-lg border-4 border-white shadow-2xl"
+            />
+          </div>
+        </div>
+      )}
+
+      {/* CARRINHO E FORMULÁRIO */}
       <h2 className="text-2xl font-bold mb-2 text-orange-500">Carrinho</h2>
       <ul className="mb-4">
         {cart.map((item, index) => (
