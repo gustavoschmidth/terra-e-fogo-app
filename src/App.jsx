@@ -105,6 +105,15 @@ export default function HamburgueriaApp() {
   return (
     <div className="p-6 max-w-2xl mx-auto bg-[#1a1a1a] text-white font-sans rounded-xl shadow-lg">
       {/* Aqui você insere novamente o restante do layout original (menu, produtos, carrinho) ANTES do select de pagamento */}
+
+      <div className="flex justify-center mb-6">
+  <img
+    src="/images/Terra.jpg"
+    alt="Logo Terra & Fogo"
+    className="h-32 w-32 rounded-full border-4 border-orange-500 shadow-md object-cover"
+  />
+</div>
+
       
       
       <h1 className="text-3xl font-bold mb-6 text-orange-500 text-center">Cardápio Terra & Fogo</h1>
