@@ -3,11 +3,11 @@ import { useState, useEffect } from "react";
 const categorizedMenu = {
   Lanches: [
     { id: 3, name: "Saladão Brutal", price: 19.99, image: "/images/saladao.jpg", description: "Pão brioche, burger 120gr, queijo, alface americano, cebola roxa, mayo" },
-    { id: 22, name: "X Clássico burguer", price: 19.00, image: "/images/x_classico.jpg", description: "Pão brioche, burger 120gr, queijo prato, mayo" },
-    { id: 21, name: "Mega Chedder melt", price: 25.00, image: "/images/mega_chedder.jpg", description: "Pão brioche, burger 120gr, queijo cheddar, molho cheddar" },
+    { id: 22, name: "X Clássico burguer", price: 19.0, image: "/images/x_classico.jpg", description: "Pão brioche, burger 120gr, queijo prato, mayo" },
+    { id: 21, name: "Mega Chedder melt", price: 25.0, image: "/images/mega_chedder.jpg", description: "Pão brioche, burger 120gr, queijo cheddar, molho cheddar" },
     { id: 2, name: "Explosão Suína", price: 34.99, image: "/images/suina.jpg", description: "Pão brioche, burger 120gr, bacon crocante, queijo cheddar, cebola caramelizada, mayo" },
-    { id: 20, name: "SMASH TURBO", price: 38.00, image: "/images/smash_turbo.jpg", description: "Pão brioche, 2 burger 120gr turbo, queijo cheddar, cebola caramelizada, picles, mayo" },
-    { id: 23, name: "Burguer terra e fogo", price: 39.00, image: "/images/terra_fogo.jpg", description: "Pão brioche, burger 120gr, queijo cheddar, bacon, onion rings, molho barbecue" }
+    { id: 20, name: "SMASH TURBO", price: 38.0, image: "/images/smash_turbo.jpg", description: "Pão brioche, 2 burger 120gr turbo, queijo cheddar, cebola caramelizada, picles, mayo" },
+    { id: 23, name: "Burguer terra e fogo", price: 39.0, image: "/images/terra_fogo.jpg", description: "Pão brioche, burger 120gr, queijo cheddar, bacon, onion rings, molho barbecue" }
   ],
   Combos: [
     { id: 4, name: "Combo 1 (Smash, Batata P, Refri 350ml)", price: 42.99, image: "/images/combo1.jpg", description: "Lanche smash burguer, batata individual pequena, refrigerante lata 350ml" },
@@ -47,6 +47,7 @@ export default function HamburgueriaApp() {
   const [change, setChange] = useState("");
   const [showConfirmClear, setShowConfirmClear] = useState(false);
   const [showPixKey, setShowPixKey] = useState(false);
+  const [pixReceipt, setPixReceipt] = useState(null);
 
   const pixKey = "terraefogoburguer@gmail.com";
 
@@ -59,10 +60,31 @@ export default function HamburgueriaApp() {
     alert("Chave PIX copiada para a área de transferência!");
   };
 
+  const handleReceiptChange = (e) => {
+    const file = e.target.files[0];
+    if (file && file.type.startsWith("image/")) {
+      const reader = new FileReader();
+      reader.onload = () => setPixReceipt(reader.result);
+      reader.readAsDataURL(file);
+    } else {
+      alert("Por favor, envie um comprovante válido em formato de imagem.");
+    }
+  };
+
+  const sendToWhatsApp = () => {
+    if (payment === "Pix" && !pixReceipt) {
+      alert("Por favor, anexe o comprovante do pagamento via PIX antes de continuar.");
+      return;
+    }
+    const phone = "5511976350752";
+    const itemList = cart.map((item) => `- ${item.name} x${item.quantity || 1} (R$${(item.price * (item.quantity || 1)).toFixed(2)})`).join("%0A");
+    const message = `Olá, gostaria de fazer um pedido:%0A${itemList}%0A%0ATotal: R$${getTotal().toFixed(2)}%0A%0ANome: ${name}%0AEndereço: ${address}%0AObservações: ${notes}%0AForma de pagamento: ${payment}${payment === 'Dinheiro' && change ? `%0ATroco para: R$${change}` : ''}${payment === 'Pix' && pixReceipt ? `%0AComprovante PIX: Enviado como imagem.` : ''}`;
+    window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
+  };
+
   const addToCart = (item) => {
     const exists = cart.find((i) => i.id === item.id);
     const qty = item.quantity || 1;
-
     if (exists) {
       const updatedCart = cart.map((i) =>
         i.id === item.id ? { ...i, quantity: (i.quantity || 1) + qty } : i
@@ -71,7 +93,6 @@ export default function HamburgueriaApp() {
     } else {
       setCart([...cart, { ...item, quantity: qty }]);
     }
-
     const id = Date.now();
     setAlerts((prev) => [...prev, { id, text: `${item.name} x${qty} foi adicionado ao carrinho!` }]);
     setTimeout(() => {
@@ -95,28 +116,17 @@ export default function HamburgueriaApp() {
 
   const getTotal = () => cart.reduce((sum, item) => sum + item.price * (item.quantity || 1), 0);
 
-  const sendToWhatsApp = () => {
-    const phone = "5511976350752";
-    const itemList = cart.map((item) => `- ${item.name} x${item.quantity || 1} (R$${(item.price * (item.quantity || 1)).toFixed(2)})`).join("%0A");
-    const message = `Olá, gostaria de fazer um pedido:%0A${itemList}%0A%0ATotal: R$${getTotal().toFixed(2)}%0A%0ANome: ${name}%0AEndereço: ${address}%0AObservações: ${notes}%0AForma de pagamento: ${payment}${payment === 'Dinheiro' && change ? `%0ATroco para: R$${change}` : ''}`;
-    window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
-  };
-
   return (
     <div className="p-6 max-w-2xl mx-auto bg-[#1a1a1a] text-white font-sans rounded-xl shadow-lg">
-      {/* Aqui você insere novamente o restante do layout original (menu, produtos, carrinho) ANTES do select de pagamento */}
-
       <div className="flex justify-center mb-6">
-  <img
-    src="/images/Terra.jpg"
-    alt="Logo Terra & Fogo"
-    className="h-32 w-32 rounded-full border-4 border-orange-500 shadow-md object-cover"
-  />
-</div>
+        <img
+          src="/images/Terra.jpg"
+          alt="Logo Terra & Fogo"
+          className="h-28 sm:h-32 md:h-36 w-auto rounded-full border-4 border-orange-500 shadow-lg object-cover transition-transform duration-300 hover:scale-105"
+        />
+      </div>
 
-      
-      
-      <h1 className="text-3xl font-bold mb-6 text-orange-500 text-center">Cardápio Terra & Fogo</h1>
+      <h1 className="text-3xl font-bold mb-6 text-orange-500 text-center">Cardápio</h1>
 
       <div className="fixed top-4 right-4 z-50 space-y-2">
         {alerts.map((alert) => (
@@ -133,12 +143,11 @@ export default function HamburgueriaApp() {
             {items.map((item) => (
               <div key={item.id} className="bg-[#2c2c2c] rounded-lg p-4 border-2 border-orange-500">
                 <img
-  src={item.image}
-  alt={item.name}
-  className="w-full h-48 object-contain bg-black rounded-xl mb-2 transition-transform duration-300 ease-in-out hover:scale-105 border-2 border-white"
-  loading="lazy"
-/>
-
+                  src={item.image}
+                  alt={item.name}
+                  className="w-full h-48 object-contain bg-black rounded-xl mb-2 transition-transform duration-300 ease-in-out hover:scale-105 border-2 border-white"
+                  loading="lazy"
+                />
                 <div className="font-semibold text-lg text-orange-400">{item.name}</div>
                 <div className="text-sm text-gray-300 mb-2">R${item.price.toFixed(2)}</div>
                 {item.description && (
@@ -152,9 +161,7 @@ export default function HamburgueriaApp() {
                     <span className="px-4 text-white">{item._qty || 1}</span>
                     <button onClick={() => { item._qty = (item._qty || 1) + 1; setAlerts([...alerts]); }} className="px-3 bg-gray-700 text-white">+</button>
                   </div>
-                  <button onClick={() => addToCart({ ...item, quantity: item._qty || 1 })} className="flex-1 bg-orange-500 hover:bg-orange-600 text-white py-2 rounded">
-                    Adicionar
-                  </button>
+                  <button onClick={() => addToCart({ ...item, quantity: item._qty || 1 })} className="flex-1 bg-orange-500 hover:bg-orange-600 text-white py-2 rounded">Adicionar</button>
                 </div>
               </div>
             ))}
@@ -191,11 +198,7 @@ export default function HamburgueriaApp() {
       <input className="mb-2 w-full p-2 rounded bg-[#2c2c2c] text-white border border-gray-600" placeholder="Seu nome" value={name} onChange={(e) => setName(e.target.value)} />
       <input className="mb-2 w-full p-2 rounded bg-[#2c2c2c] text-white border border-gray-600" placeholder="Endereço para entrega" value={address} onChange={(e) => setAddress(e.target.value)} />
       <textarea className="mb-2 w-full p-2 rounded bg-[#2c2c2c] text-white border border-gray-600" placeholder="Observações" value={notes} onChange={(e) => setNotes(e.target.value)} />
-<select
-        className="mb-2 w-full p-2 rounded bg-[#2c2c2c] text-white border border-gray-600"
-        value={payment}
-        onChange={(e) => setPayment(e.target.value)}
-      >
+      <select className="mb-2 w-full p-2 rounded bg-[#2c2c2c] text-white border border-gray-600" value={payment} onChange={(e) => setPayment(e.target.value)}>
         <option value="">Selecione a forma de pagamento</option>
         <option value="Dinheiro">Dinheiro</option>
         <option value="Pix">PIX</option>
@@ -203,34 +206,20 @@ export default function HamburgueriaApp() {
       </select>
 
       {payment === "Dinheiro" && (
-        <input
-          className="mb-4 w-full p-2 rounded bg-[#2c2c2c] text-white border border-gray-600"
-          placeholder="Troco para quanto?"
-          value={change}
-          onChange={(e) => setChange(e.target.value)}
-        />
+        <input className="mb-4 w-full p-2 rounded bg-[#2c2c2c] text-white border border-gray-600" placeholder="Troco para quanto?" value={change} onChange={(e) => setChange(e.target.value)} />
       )}
 
       {showPixKey && (
         <div className="mb-4 p-4 bg-[#2c2c2c] border border-orange-500 rounded-lg text-center">
           <p className="mb-2 text-orange-400">Chave PIX:</p>
           <div className="mb-2 text-white select-all">{pixKey}</div>
-          <button
-            onClick={copyPixKey}
-            className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded"
-          >
-            Copiar chave PIX
-          </button>
+          <button onClick={copyPixKey} className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded mb-2">Copiar chave PIX</button>
+          <input type="file" accept="image/*" onChange={handleReceiptChange} className="w-full text-sm text-gray-300 file:bg-orange-500 file:border-none file:px-3 file:py-1 file:rounded file:text-white" />
+          {pixReceipt && (<div className="mt-2 text-sm text-green-400">Comprovante anexado com sucesso!</div>)}
         </div>
       )}
 
-      <button
-        onClick={sendToWhatsApp}
-        disabled={!name || !address || cart.length === 0}
-        className="bg-green-600 hover:bg-green-700 text-white w-full py-3 rounded"
-      >
-        Enviar pedido via WhatsApp
-      </button>
+      <button onClick={sendToWhatsApp} disabled={!name || !address || cart.length === 0} className="bg-green-600 hover:bg-green-700 text-white w-full py-3 rounded">Enviar pedido via WhatsApp</button>
     </div>
   );
 }
