@@ -17,7 +17,7 @@ const categorizedMenu = {
   Porções: [
     { id: 7, name: "Batata Frita P", price: 10.00, image: "/images/batata_p.jpg", description: "Porção individual pequena de batata frita" },
     { id: 8, name: "Batata Frita G", price: 20.00, image: "/images/batata_g.jpg", description: "Porção grande de batata frita para compartilhar" },
-    { id: 9, name: "Batata Frita G c/ Cheddar e Bacon", price: 34.99, image: "/images/batata_cheddar.jpg", description: "Batata grande com cobertura de cheddar cremoso e bacon crocante" },
+    { id: 9, name: "Batata Frita G c/ Cheddar e Bacon", price: 34.99, image: "/images/batata_cheddar.jpg", description: "Batata grande com cobertura de cheddar cremoso e bacon crocante" }
   ],
   Bebidas: [
     { id: 10, name: "Coca-Cola Lata 350ml", price: 5.00, image: "/images/coca.jpg" },
@@ -25,7 +25,7 @@ const categorizedMenu = {
     { id: 12, name: "Fanta Laranja Lata 350ml", price: 5.00, image: "/images/fanta_laranja.jpg" },
     { id: 13, name: "Fanta Uva Lata 350ml", price: 5.00, image: "/images/fanta_uva.jpg" },
     { id: 11, name: "Guaraná Antarctica Lata 350ml", price: 5.00, image: "/images/guarana.jpg" },
-    { id: 15, name: "Pepsi Lata 350ml", price: 5.00, image: "/images/pepsi.jpg" },
+    { id: 15, name: "Pepsi Lata 350ml", price: 5.00, image: "/images/pepsi.jpg" }
   ],
   Adicionais: [
     { id: 14, name: "Adicional: Cheddar", price: 5.00, image: "/images/cheddar.jpg" },
@@ -33,8 +33,8 @@ const categorizedMenu = {
     { id: 16, name: "Adicional: Bacon", price: 5.00, image: "/images/bacon.jpg" },
     { id: 17, name: "Adicional: Hambúrguer", price: 9.00, image: "/images/hamburguer.jpg" },
     { id: 18, name: "Adicional: Cebola", price: 2.00, image: "/images/cebola_simples.jpg" },
-    { id: 19, name: "Adicional: Mayo", price: 3.00, image: "/images/mayo.jpg" },
-  ],
+    { id: 19, name: "Adicional: Mayo", price: 3.00, image: "/images/mayo.jpg" }
+  ]
 };
 
 export default function HamburgueriaApp() {
@@ -43,7 +43,21 @@ export default function HamburgueriaApp() {
   const [address, setAddress] = useState("");
   const [notes, setNotes] = useState("");
   const [alerts, setAlerts] = useState([]);
+  const [payment, setPayment] = useState("");
+  const [change, setChange] = useState("");
   const [showConfirmClear, setShowConfirmClear] = useState(false);
+  const [showPixKey, setShowPixKey] = useState(false);
+
+  const pixKey = "terraefogoburguer@gmail.com";
+
+  useEffect(() => {
+    setShowPixKey(payment === "Pix");
+  }, [payment]);
+
+  const copyPixKey = () => {
+    navigator.clipboard.writeText(pixKey);
+    alert("Chave PIX copiada para a área de transferência!");
+  };
 
   const addToCart = (item) => {
     const exists = cart.find((i) => i.id === item.id);
@@ -66,16 +80,13 @@ export default function HamburgueriaApp() {
   };
 
   const removeFromCart = (index) => {
-    const item = cart[index];
-    if (item.quantity && item.quantity > 1) {
-      const newCart = [...cart];
+    const newCart = [...cart];
+    if (newCart[index].quantity > 1) {
       newCart[index].quantity -= 1;
-      setCart(newCart);
     } else {
-      const newCart = [...cart];
       newCart.splice(index, 1);
-      setCart(newCart);
     }
+    setCart(newCart);
   };
 
   const clearCart = () => {
@@ -87,15 +98,15 @@ export default function HamburgueriaApp() {
   const sendToWhatsApp = () => {
     const phone = "5511976350752";
     const itemList = cart.map((item) => `- ${item.name} x${item.quantity || 1} (R$${(item.price * (item.quantity || 1)).toFixed(2)})`).join("%0A");
-    const message = `Olá, gostaria de fazer um pedido:%0A${itemList}%0A%0ATotal: R$${getTotal().toFixed(2)}%0A%0ANome: ${name}%0AEndereço: ${address}%0AObservações: ${notes}`;
+    const message = `Olá, gostaria de fazer um pedido:%0A${itemList}%0A%0ATotal: R$${getTotal().toFixed(2)}%0A%0ANome: ${name}%0AEndereço: ${address}%0AObservações: ${notes}%0AForma de pagamento: ${payment}${payment === 'Dinheiro' && change ? `%0ATroco para: R$${change}` : ''}`;
     window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
   };
 
   return (
     <div className="p-6 max-w-2xl mx-auto bg-[#1a1a1a] text-white font-sans rounded-xl shadow-lg">
-      <div className="sticky top-0 z-50 bg-[#1a1a1a] flex justify-center mb-6 py-2 shadow-lg">
-        <img src="/images/logo.jpg" alt="Terra & Fogo Logo" className="h-24 sm:h-28 md:h-32 w-auto max-w-xs rounded-full border-4 border-orange-500 shadow-md transition-transform duration-300 hover:scale-105" />
-      </div>
+      {/* Aqui você insere novamente o restante do layout original (menu, produtos, carrinho) ANTES do select de pagamento */}
+      
+      
       <h1 className="text-3xl font-bold mb-6 text-orange-500 text-center">Cardápio Terra & Fogo</h1>
 
       <div className="fixed top-4 right-4 z-50 space-y-2">
@@ -111,37 +122,28 @@ export default function HamburgueriaApp() {
           <h2 className="text-2xl font-semibold mb-3 border-b border-orange-500 pb-1">{category}</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {items.map((item) => (
-              <div key={item.id} className="bg-[#2c2c2c] rounded-lg p-4">
-                <img src={item.image} alt={item.name} className="w-full h-48 object-contain bg-black rounded-xl mb-2 transition-transform duration-300 ease-in-out hover:scale-105" loading="lazy" />
+              <div key={item.id} className="bg-[#2c2c2c] rounded-lg p-4 border-2 border-orange-500">
+                <img
+  src={item.image}
+  alt={item.name}
+  className="w-full h-48 object-contain bg-black rounded-xl mb-2 transition-transform duration-300 ease-in-out hover:scale-105 border-2 border-white"
+  loading="lazy"
+/>
+
                 <div className="font-semibold text-lg text-orange-400">{item.name}</div>
                 <div className="text-sm text-gray-300 mb-2">R${item.price.toFixed(2)}</div>
                 {item.description && (
                   <div className="text-xs mt-1 bg-[#1f1f1f] text-orange-300 border border-orange-500 px-3 py-2 rounded shadow-sm">
-  {item.description}
-</div>
+                    {item.description}
+                  </div>
                 )}
                 <div className="flex items-center gap-2 mt-2">
                   <div className="flex items-center border border-gray-600 rounded overflow-hidden">
-                    <button
-                      onClick={() => {
-                        item._qty = Math.max((item._qty || 1) - 1, 1);
-                        setAlerts([...alerts]);
-                      }}
-                      className="px-3 bg-gray-700 text-white"
-                    >-</button>
+                    <button onClick={() => { item._qty = Math.max((item._qty || 1) - 1, 1); setAlerts([...alerts]); }} className="px-3 bg-gray-700 text-white">-</button>
                     <span className="px-4 text-white">{item._qty || 1}</span>
-                    <button
-                      onClick={() => {
-                        item._qty = (item._qty || 1) + 1;
-                        setAlerts([...alerts]);
-                      }}
-                      className="px-3 bg-gray-700 text-white"
-                    >+</button>
+                    <button onClick={() => { item._qty = (item._qty || 1) + 1; setAlerts([...alerts]); }} className="px-3 bg-gray-700 text-white">+</button>
                   </div>
-                  <button
-                    onClick={() => addToCart({ ...item, quantity: item._qty || 1 })}
-                    className="flex-1 bg-orange-500 hover:bg-orange-600 text-white py-2 rounded"
-                  >
+                  <button onClick={() => addToCart({ ...item, quantity: item._qty || 1 })} className="flex-1 bg-orange-500 hover:bg-orange-600 text-white py-2 rounded">
                     Adicionar
                   </button>
                 </div>
@@ -179,9 +181,45 @@ export default function HamburgueriaApp() {
 
       <input className="mb-2 w-full p-2 rounded bg-[#2c2c2c] text-white border border-gray-600" placeholder="Seu nome" value={name} onChange={(e) => setName(e.target.value)} />
       <input className="mb-2 w-full p-2 rounded bg-[#2c2c2c] text-white border border-gray-600" placeholder="Endereço para entrega" value={address} onChange={(e) => setAddress(e.target.value)} />
-      <textarea className="mb-4 w-full p-2 rounded bg-[#2c2c2c] text-white border border-gray-600" placeholder="Observações" value={notes} onChange={(e) => setNotes(e.target.value)} />
+      <textarea className="mb-2 w-full p-2 rounded bg-[#2c2c2c] text-white border border-gray-600" placeholder="Observações" value={notes} onChange={(e) => setNotes(e.target.value)} />
+<select
+        className="mb-2 w-full p-2 rounded bg-[#2c2c2c] text-white border border-gray-600"
+        value={payment}
+        onChange={(e) => setPayment(e.target.value)}
+      >
+        <option value="">Selecione a forma de pagamento</option>
+        <option value="Dinheiro">Dinheiro</option>
+        <option value="Pix">PIX</option>
+        <option value="Cartão">Cartão (Débito/Crédito)</option>
+      </select>
 
-      <button onClick={sendToWhatsApp} disabled={!name || !address || cart.length === 0} className="bg-green-600 hover:bg-green-700 text-white w-full py-3 rounded">
+      {payment === "Dinheiro" && (
+        <input
+          className="mb-4 w-full p-2 rounded bg-[#2c2c2c] text-white border border-gray-600"
+          placeholder="Troco para quanto?"
+          value={change}
+          onChange={(e) => setChange(e.target.value)}
+        />
+      )}
+
+      {showPixKey && (
+        <div className="mb-4 p-4 bg-[#2c2c2c] border border-orange-500 rounded-lg text-center">
+          <p className="mb-2 text-orange-400">Chave PIX:</p>
+          <div className="mb-2 text-white select-all">{pixKey}</div>
+          <button
+            onClick={copyPixKey}
+            className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded"
+          >
+            Copiar chave PIX
+          </button>
+        </div>
+      )}
+
+      <button
+        onClick={sendToWhatsApp}
+        disabled={!name || !address || cart.length === 0}
+        className="bg-green-600 hover:bg-green-700 text-white w-full py-3 rounded"
+      >
         Enviar pedido via WhatsApp
       </button>
     </div>
