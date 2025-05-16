@@ -33,7 +33,8 @@ const categorizedMenu = {
     { id: 16, name: "Adicional: Bacon", price: 5.00, image: "/images/bacon.jpg" },
     { id: 17, name: "Adicional: Hambúrguer", price: 9.00, image: "/images/hamburguer.jpg" },
     { id: 18, name: "Adicional: Cebola", price: 2.00, image: "/images/cebola_simples.jpg" },
-    { id: 19, name: "Adicional: Mayo", price: 3.00, image: "/images/mayo.jpg" }
+    { id: 19, name: "Adicional: Mayo", price: 3.00, image: "/images/mayo.jpg" },
+    { id: 20, name: "Adicional: Onion Rings", price: 7.00, image: "/images/onion_rings.jpg" }
   ]
 };
 
@@ -78,7 +79,7 @@ export default function HamburgueriaApp() {
     }
     const phone = "5511976350752";
     const itemList = cart.map((item) => `- ${item.name} x${item.quantity || 1} (R$${(item.price * (item.quantity || 1)).toFixed(2)})`).join("%0A");
-    const message = `Olá, gostaria de fazer um pedido:\n %0A${itemList}%0A%0ATotal: R$${getTotal().toFixed(2)}%0A%0ANome: ${name}%0AEndereço: ${address}%0AObservações: ${notes}%0AForma de pagamento: ${payment}${payment === 'Dinheiro' && change ? `%0ATroco para: R$${change}` : ''}${payment === 'Pix' && pixReceipt ? `%0AComprovante PIX: Enviado como imagem.` : ''}`;
+    const message = `Olá, gostaria de fazer um pedido:%0A${itemList}%0A%0ATotal: R$${getTotal().toFixed(2)}%0A%0ANome: ${name}%0AEndereço: ${address}%0AObservações: ${notes}%0AForma de pagamento: ${payment}${payment === 'Dinheiro' && change ? `%0ATroco para: R$${change}` : ''}${payment === 'Pix' && pixReceipt ? `%0AComprovante PIX: Enviado como imagem.` : ''}`;
     window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
   };
 
