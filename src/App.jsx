@@ -2,19 +2,22 @@ import { useState, useEffect } from "react";
 
 const categorizedMenu = {
   Lanches: [
-    { id: 1, name: "Smash Burguer", price: 29.99, image: "/images/smash.jpg" },
-    { id: 2, name: "Explosão Suína", price: 34.99, image: "/images/suina.jpg" },
-    { id: 3, name: "Saladão Brutal", price: 19.99, image: "/images/saladao.jpg" },
+    { id: 3, name: "Saladão Brutal", price: 19.99, image: "/images/saladao.jpg", description: "Pão brioche, burger 120gr, queijo, alface americano, cebola roxa, mayo" },
+    { id: 22, name: "X Clássico burguer", price: 19.00, image: "/images/x_classico.jpg", description: "Pão brioche, burger 120gr, queijo prato, mayo" },
+    { id: 21, name: "Mega Chedder melt", price: 25.00, image: "/images/mega_chedder.jpg", description: "Pão brioche, burger 120gr, queijo cheddar, molho cheddar" },
+    { id: 2, name: "Explosão Suína", price: 34.99, image: "/images/suina.jpg", description: "Pão brioche, burger 120gr, bacon crocante, queijo cheddar, cebola caramelizada, mayo" },
+    { id: 20, name: "SMASH TURBO", price: 38.00, image: "/images/smash_turbo.jpg", description: "Pão brioche, 2 burger 120gr turbo, queijo cheddar, cebola caramelizada, picles, mayo" },
+    { id: 23, name: "Burguer terra e fogo", price: 39.00, image: "/images/terra_fogo.jpg", description: "Pão brioche, burger 120gr, queijo cheddar, bacon, onion rings, molho barbecue" }
   ],
   Combos: [
-    { id: 4, name: "Combo 1 (Smash, Batata P, Refri 350ml)", price: 42.99, image: "/images/combo1.jpg" },
-    { id: 5, name: "Combo 2 (Explosão Suína, Batata P, Refri 350ml)", price: 47.00, image: "/images/combo2.jpg" },
-    { id: 6, name: "Combo 3 (Saladão Brutal, Batata P, Refri 350ml)", price: 32.00, image: "/images/combo3.jpg" },
+    { id: 4, name: "Combo 1 (Smash, Batata P, Refri 350ml)", price: 42.99, image: "/images/combo1.jpg", description: "Lanche smash burguer, batata individual pequena, refrigerante lata 350ml" },
+    { id: 5, name: "Combo 2 (Explosão Suína, Batata P, Refri 350ml)", price: 47.00, image: "/images/combo2.jpg", description: "Lanche explosão suína, batata individual pequena, refrigerante lata 350ml" },
+    { id: 6, name: "Combo 3 (Saladão Brutal, Batata P, Refri 350ml)", price: 32.00, image: "/images/combo3.jpg", description: "Lanche saladão brutal, batata individual pequena, refrigerante lata 350ml" }
   ],
   Porções: [
-    { id: 7, name: "Batata Frita P", price: 10.00, image: "/images/batata_p.jpg" },
-    { id: 8, name: "Batata Frita G", price: 20.00, image: "/images/batata_g.jpg" },
-    { id: 9, name: "Batata Frita G c/ Cheddar e Bacon", price: 34.99, image: "/images/batata_cheddar.jpg" },
+    { id: 7, name: "Batata Frita P", price: 10.00, image: "/images/batata_p.jpg", description: "Porção individual pequena de batata frita" },
+    { id: 8, name: "Batata Frita G", price: 20.00, image: "/images/batata_g.jpg", description: "Porção grande de batata frita para compartilhar" },
+    { id: 9, name: "Batata Frita G c/ Cheddar e Bacon", price: 34.99, image: "/images/batata_cheddar.jpg", description: "Batata grande com cobertura de cheddar cremoso e bacon crocante" },
   ],
   Bebidas: [
     { id: 10, name: "Coca-Cola Lata 350ml", price: 5.00, image: "/images/coca.jpg" },
@@ -90,6 +93,9 @@ export default function HamburgueriaApp() {
 
   return (
     <div className="p-6 max-w-2xl mx-auto bg-[#1a1a1a] text-white font-sans rounded-xl shadow-lg">
+      <div className="sticky top-0 z-50 bg-[#1a1a1a] flex justify-center mb-6 py-2 shadow-lg">
+        <img src="/images/logo.jpg" alt="Terra & Fogo Logo" className="h-24 sm:h-28 md:h-32 w-auto max-w-xs rounded-full border-4 border-orange-500 shadow-md transition-transform duration-300 hover:scale-105" />
+      </div>
       <h1 className="text-3xl font-bold mb-6 text-orange-500 text-center">Cardápio Terra & Fogo</h1>
 
       <div className="fixed top-4 right-4 z-50 space-y-2">
@@ -106,34 +112,39 @@ export default function HamburgueriaApp() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {items.map((item) => (
               <div key={item.id} className="bg-[#2c2c2c] rounded-lg p-4">
-                <img src={item.image} alt={item.name} className="w-full h-48 object-contain bg-white rounded mb-2 transition-transform duration-300 ease-in-out hover:scale-105" loading="lazy" />
+                <img src={item.image} alt={item.name} className="w-full h-48 object-contain bg-black rounded-xl mb-2 transition-transform duration-300 ease-in-out hover:scale-105" loading="lazy" />
                 <div className="font-semibold text-lg text-orange-400">{item.name}</div>
                 <div className="text-sm text-gray-300 mb-2">R${item.price.toFixed(2)}</div>
-                <div className="flex items-center gap-2">
-  <div className="flex items-center border border-gray-600 rounded overflow-hidden">
-    <button
-      onClick={() => {
-        item._qty = Math.max((item._qty || 1) - 1, 1);
-        setAlerts([...alerts]);
-      }}
-      className="px-3 bg-gray-700 text-white"
-    >-</button>
-    <span className="px-4 text-white">{item._qty || 1}</span>
-    <button
-      onClick={() => {
-        item._qty = (item._qty || 1) + 1;
-        setAlerts([...alerts]);
-      }}
-      className="px-3 bg-gray-700 text-white"
-    >+</button>
-  </div>
-  <button
-    onClick={() => addToCart({ ...item, quantity: item._qty || 1 })}
-    className="flex-1 bg-orange-500 hover:bg-orange-600 text-white py-2 rounded"
-  >
-    Adicionar
-  </button>
+                {item.description && (
+                  <div className="text-xs mt-1 bg-[#1f1f1f] text-orange-300 border border-orange-500 px-3 py-2 rounded shadow-sm">
+  {item.description}
 </div>
+                )}
+                <div className="flex items-center gap-2 mt-2">
+                  <div className="flex items-center border border-gray-600 rounded overflow-hidden">
+                    <button
+                      onClick={() => {
+                        item._qty = Math.max((item._qty || 1) - 1, 1);
+                        setAlerts([...alerts]);
+                      }}
+                      className="px-3 bg-gray-700 text-white"
+                    >-</button>
+                    <span className="px-4 text-white">{item._qty || 1}</span>
+                    <button
+                      onClick={() => {
+                        item._qty = (item._qty || 1) + 1;
+                        setAlerts([...alerts]);
+                      }}
+                      className="px-3 bg-gray-700 text-white"
+                    >+</button>
+                  </div>
+                  <button
+                    onClick={() => addToCart({ ...item, quantity: item._qty || 1 })}
+                    className="flex-1 bg-orange-500 hover:bg-orange-600 text-white py-2 rounded"
+                  >
+                    Adicionar
+                  </button>
+                </div>
               </div>
             ))}
           </div>
