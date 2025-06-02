@@ -123,9 +123,19 @@ export default function HamburgueriaApp() {
   const getTotal = () => cart.reduce((sum, item) => sum + item.price * (item.quantity || 1), 0);
 
   return (
-    <div className="p-6 max-w-2xl mx-auto bg-[#1a1a1a] text-white font-sans rounded-xl shadow-lg">
+    <><div className="p-6 max-w-2xl mx-auto bg-[#1a1a1a] text-white font-sans rounded-xl shadow-lg">
       <div className="flex justify-center mb-6">
         <img src="/images/Terra.jpg" alt="Logo Terra & Fogo" className="h-28 sm:h-32 md:h-36 w-auto rounded-full border-4 border-orange-500 shadow-lg object-cover transition-transform duration-300 hover:scale-105" />
+      </div>
+
+      <div className="flex justify-center mb-6">
+        <video
+          src="/videos/promo.mp4"
+          className="rounded-lg border-4 border-orange-500 shadow-lg max-h-72 w-full object-cover"
+          autoPlay
+          loop
+          muted
+          playsInline />
       </div>
 
       <h1 className="text-3xl font-bold mb-6 text-orange-500 text-center">Cardápio</h1>
@@ -154,8 +164,7 @@ export default function HamburgueriaApp() {
                   alt={item.name}
                   onClick={() => setSelectedImage(item.image)}
                   className="w-full h-48 object-contain bg-black rounded-xl mb-2 transition-transform duration-300 ease-in-out hover:scale-105 border-2 border-white cursor-pointer"
-                  loading="lazy"
-                />
+                  loading="lazy" />
                 <div className="font-semibold text-lg text-orange-400">{item.name}</div>
                 <div className="text-sm text-gray-300 mb-2">R${item.price.toFixed(2)}</div>
                 {item.description && (
@@ -165,9 +174,9 @@ export default function HamburgueriaApp() {
                 )}
                 <div className="flex items-center gap-2 mt-2">
                   <div className="flex items-center border border-gray-600 rounded overflow-hidden">
-                    <button onClick={() => { item._qty = Math.max((item._qty || 1) - 1, 1); setAlerts([...alerts]); }} className="px-3 bg-gray-700 text-white">-</button>
+                    <button onClick={() => { item._qty = Math.max((item._qty || 1) - 1, 1); setAlerts([...alerts]); } } className="px-3 bg-gray-700 text-white">-</button>
                     <span className="px-4 text-white">{item._qty || 1}</span>
-                    <button onClick={() => { item._qty = (item._qty || 1) + 1; setAlerts([...alerts]); }} className="px-3 bg-gray-700 text-white">+</button>
+                    <button onClick={() => { item._qty = (item._qty || 1) + 1; setAlerts([...alerts]); } } className="px-3 bg-gray-700 text-white">+</button>
                   </div>
                   <button onClick={() => addToCart({ ...item, quantity: item._qty || 1 })} className="flex-1 bg-orange-500 hover:bg-orange-600 text-white py-2 rounded">Adicionar</button>
                 </div>
@@ -189,8 +198,7 @@ export default function HamburgueriaApp() {
             <img
               src={selectedImage}
               alt="Imagem ampliada"
-              className="max-w-full max-h-screen rounded-lg border-4 border-white shadow-2xl"
-            />
+              className="max-w-full max-h-screen rounded-lg border-4 border-white shadow-2xl" />
           </div>
         </div>
       )}
@@ -216,7 +224,7 @@ export default function HamburgueriaApp() {
             <p className="mb-6">Tem certeza que deseja limpar o carrinho?</p>
             <div className="flex justify-end gap-4">
               <button onClick={() => setShowConfirmClear(false)} className="px-4 py-2 bg-gray-500 hover:bg-gray-600 rounded">Cancelar</button>
-              <button onClick={() => { setCart([]); setShowConfirmClear(false); }} className="px-4 py-2 bg-red-600 hover:bg-red-700 rounded">Confirmar</button>
+              <button onClick={() => { setCart([]); setShowConfirmClear(false); } } className="px-4 py-2 bg-red-600 hover:bg-red-700 rounded">Confirmar</button>
             </div>
           </div>
         </div>
@@ -247,6 +255,8 @@ export default function HamburgueriaApp() {
       )}
 
       <button onClick={sendToWhatsApp} disabled={!name || !address || cart.length === 0} className="bg-green-600 hover:bg-green-700 text-white w-full py-3 rounded">Enviar pedido via WhatsApp</button>
-    </div>
+    </div><footer className="mt-10 text-center text-gray-400 text-sm">
+        Projeto idealizado e desenvolvido por Gustavo Schmidth – © 2025.
+      </footer></>
   );
 }
