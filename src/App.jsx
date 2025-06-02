@@ -128,6 +128,25 @@ export default function HamburgueriaApp() {
         <img src="/images/Terra.jpg" alt="Logo Terra & Fogo" className="h-28 sm:h-32 md:h-36 w-auto rounded-full border-4 border-orange-500 shadow-lg object-cover transition-transform duration-300 hover:scale-105" />
       </div>
 
+      <div className="mb-6 p-4 bg-[#2c2c2c] border-l-4 border-orange-500 text-white rounded text-sm leading-relaxed">
+        <h2 className="text-xl font-semibold text-orange-400 mb-2">🍔 Sobre Nós</h2>
+        <p>
+          Na <strong>Terra & Fogo Burger</strong> 🔥, acreditamos que um bom hambúrguer vai além do sabor — ele conta uma história.
+          Unimos ingredientes de qualidade, receitas autorais e muito carinho ❤️ em cada preparo para oferecer uma experiência única a cada mordida.
+        </p>
+        <p className="mt-2">
+          Somos uma hamburgueria 100% focada em <strong>delivery</strong> 🛵. Tudo é feito na hora, com atenção aos detalhes e aquele toque especial que só quem ama o que faz consegue entregar.
+        </p>
+        <p className="mt-2">
+          Aqui é o lugar certo pra matar sua fome com estilo 😋. Escolha seu lanche favorito, faça seu pedido e deixe o resto com a gente!
+        </p>
+      </div>
+
+      <div className="mb-6 p-4 bg-[#2c2c2c] border-l-4 border-orange-500 text-orange-300 rounded">
+        <strong>📍 Entrega grátis até 3km</strong><br />
+        Para distâncias maiores, a taxa será informada após consulta.
+      </div>
+
       <div className="flex justify-center mb-6">
         <video
           src="/videos/promo.mp4"
@@ -138,12 +157,9 @@ export default function HamburgueriaApp() {
           playsInline />
       </div>
 
-      <h1 className="text-3xl font-bold mb-6 text-orange-500 text-center">Cardápio</h1>
-
-      <div className="mb-6 p-4 bg-[#2c2c2c] border-l-4 border-orange-500 text-orange-300 rounded">
-        <strong>📍 Entrega grátis até 3km</strong><br />
-        Para distâncias maiores, a taxa será informada após consulta.
-      </div>
+      <h1 className="text-2xl font-extrabold mb-6 text-orange-500 text-center border-b-4 border-orange-400 inline-block pb-2 shadow-orange-500 drop-shadow-md">
+        🍽️ Nosso Cardápio
+      </h1>
 
       <div className="fixed top-4 right-4 z-50 space-y-2">
         {alerts.map((alert) => (
@@ -174,9 +190,9 @@ export default function HamburgueriaApp() {
                 )}
                 <div className="flex items-center gap-2 mt-2">
                   <div className="flex items-center border border-gray-600 rounded overflow-hidden">
-                    <button onClick={() => { item._qty = Math.max((item._qty || 1) - 1, 1); setAlerts([...alerts]); } } className="px-3 bg-gray-700 text-white">-</button>
+                    <button onClick={() => { item._qty = Math.max((item._qty || 1) - 1, 1); setAlerts([...alerts]); }} className="px-3 bg-gray-700 text-white">-</button>
                     <span className="px-4 text-white">{item._qty || 1}</span>
-                    <button onClick={() => { item._qty = (item._qty || 1) + 1; setAlerts([...alerts]); } } className="px-3 bg-gray-700 text-white">+</button>
+                    <button onClick={() => { item._qty = (item._qty || 1) + 1; setAlerts([...alerts]); }} className="px-3 bg-gray-700 text-white">+</button>
                   </div>
                   <button onClick={() => addToCart({ ...item, quantity: item._qty || 1 })} className="flex-1 bg-orange-500 hover:bg-orange-600 text-white py-2 rounded">Adicionar</button>
                 </div>
@@ -224,7 +240,7 @@ export default function HamburgueriaApp() {
             <p className="mb-6">Tem certeza que deseja limpar o carrinho?</p>
             <div className="flex justify-end gap-4">
               <button onClick={() => setShowConfirmClear(false)} className="px-4 py-2 bg-gray-500 hover:bg-gray-600 rounded">Cancelar</button>
-              <button onClick={() => { setCart([]); setShowConfirmClear(false); } } className="px-4 py-2 bg-red-600 hover:bg-red-700 rounded">Confirmar</button>
+              <button onClick={() => { setCart([]); setShowConfirmClear(false); }} className="px-4 py-2 bg-red-600 hover:bg-red-700 rounded">Confirmar</button>
             </div>
           </div>
         </div>
