@@ -12,7 +12,11 @@ const categorizedMenu = {
   "Combos": [
     { id: 4, name: "Combo 1 (Smash, Batata P, Refri 350ml)", price: 42.99, image: "/images/combo1.jpg", description: "Lanche smash burguer, batata individual pequena, refrigerante lata 350ml" },
     { id: 5, name: "Combo 2 (Explosão Suína, Batata P, Refri 350ml)", price: 47.00, image: "/images/combo2.jpg", description: "Lanche explosão suína, batata individual pequena, refrigerante lata 350ml" },
-    { id: 6, name: "Combo 3 (Saladão Brutal, Batata P, Refri 350ml)", price: 32.00, image: "/images/combo3.jpg", description: "Lanche saladão brutal, batata individual pequena, refrigerante lata 350ml" }
+    { id: 6, name: "Combo 3 (Saladão Brutal, Batata P, Refri 350ml)", price: 32.00, image: "/images/combo3.jpg", description: "Lanche saladão brutal, batata individual pequena, refrigerante lata 350ml" },
+    { id: 7, name: "Combo Mega Cheddar Melt", price: 45.00, image: "/images/combo_mega_chedder.jpg", description: "Mega Cheddar Melt, batata individual pequena, refrigerante lata 350ml" },
+    { id: 8, name: "Combo Smash Turbo Duplo", price: 49.00, image: "/images/combo_smash_turbo.jpg", description: "Smash Turbo Duplo, batata individual pequena, refrigerante lata 350ml" },
+    { id: 9, name: "Combo X- Clássico Burguer", price: 39.00, image: "/images/combo_x_classico.jpg", description: "X Clássico Burguer, batata individual pequena, refrigerante lata 350ml" },
+    { id: 10, name: "Combo Terra & Fogo", price: 50.00, image: "/images/combo_terra_fogo.jpg", description: "Burguer Terra & Fogo, batata individual pequena, refrigerante lata 350ml" }
   ],
   "Porções": [
     { id: 7, name: "Batata Frita P", price: 10.00, image: "/images/batata_p.jpg", description: "Porção individual pequena de batata frita" },
