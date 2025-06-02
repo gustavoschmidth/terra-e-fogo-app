@@ -1,0 +1,11 @@
+1. cd C:\Users\gusta\Desktop\terra-e-fogo-novo-projeto
+
+2. git init
+
+3. git add .
+
+4. git commit -m "Nova Versão"
+
+5. git branch -M main
+
+6. git push -u origin main

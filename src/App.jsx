@@ -3,20 +3,20 @@ import { useState, useEffect } from "react";
 const categorizedMenu = {
   "Lanches": [
     { id: 3, name: "Saladão Brutal", price: 19.99, image: "/images/saladao.jpg", description: "Pão brioche, burger 120gr, queijo, alface americano, cebola roxa, mayo" },
-    { id: 22, name: "X Clássico burguer", price: 19.0, image: "/images/x_classico.jpg", description: "Pão brioche, burger 120gr, queijo prato, mayo" },
-    { id: 21, name: "Mega Chedder melt", price: 25.0, image: "/images/mega_chedder.jpg", description: "Pão brioche, burger 120gr, queijo cheddar, molho cheddar" },
+    { id: 22, name: "X Clássico Burguer", price: 19.0, image: "/images/x_classico.jpg", description: "Pão brioche, burger 120gr, queijo prato, mayo" },
+    { id: 21, name: "Mega Cheddar Melt", price: 25.0, image: "/images/mega_chedder.jpg", description: "Pão brioche, burger 120gr, queijo cheddar, molho cheddar" },
     { id: 2, name: "Explosão Suína", price: 34.99, image: "/images/suina.jpg", description: "Pão brioche, burger 120gr, bacon crocante, queijo cheddar, cebola caramelizada, mayo" },
-    { id: 20, name: "SMASH TURBO", price: 38.0, image: "/images/smash_turbo.jpg", description: "Pão brioche, 2 burger 120gr turbo, queijo cheddar, cebola caramelizada, picles, mayo" },
-    { id: 23, name: "Burguer terra e fogo", price: 39.0, image: "/images/terra_fogo.jpg", description: "Pão brioche, burger 120gr, queijo cheddar, bacon, onion rings, molho barbecue" }
+    { id: 20, name: "Smash Turbo", price: 38.0, image: "/images/smash_turbo.jpg", description: "Pão brioche, 2 burger 120gr turbo, queijo cheddar, cebola caramelizada, picles, mayo" },
+    { id: 23, name: "Burguer Terra & Fogo", price: 39.0, image: "/images/terra_fogo.jpg", description: "Pão brioche, burger 120gr, queijo cheddar, bacon, onion rings, molho barbecue" }
   ],
   "Combos": [
-    { id: 4, name: "Combo 1 (Smash, Batata P, Refri 350ml)", price: 42.99, image: "/images/combo1.jpg", description: "Lanche smash burguer, batata individual pequena, refrigerante lata 350ml" },
-    { id: 5, name: "Combo 2 (Explosão Suína, Batata P, Refri 350ml)", price: 47.00, image: "/images/combo2.jpg", description: "Lanche explosão suína, batata individual pequena, refrigerante lata 350ml" },
-    { id: 6, name: "Combo 3 (Saladão Brutal, Batata P, Refri 350ml)", price: 32.00, image: "/images/combo3.jpg", description: "Lanche saladão brutal, batata individual pequena, refrigerante lata 350ml" },
-    { id: 7, name: "Combo Mega Cheddar Melt", price: 45.00, image: "/images/combo_mega_chedder.jpg", description: "Mega Cheddar Melt, batata individual pequena, refrigerante lata 350ml" },
-    { id: 8, name: "Combo Smash Turbo Duplo", price: 49.00, image: "/images/combo_smash_turbo.jpg", description: "Smash Turbo Duplo, batata individual pequena, refrigerante lata 350ml" },
-    { id: 9, name: "Combo X- Clássico Burguer", price: 39.00, image: "/images/combo_x_classico.jpg", description: "X Clássico Burguer, batata individual pequena, refrigerante lata 350ml" },
-    { id: 10, name: "Combo Terra & Fogo", price: 50.00, image: "/images/combo_terra_fogo.jpg", description: "Burguer Terra & Fogo, batata individual pequena, refrigerante lata 350ml" }
+    { id: 4, name: "Combo Smash Burger (Smash, Batata P, Refri 350ml)", price: 42.00, image: "/images/combo1.jpg", description: "Lanche smash burguer, batata individual pequena, refrigerante lata 350ml" },
+    { id: 5, name: "Combo Explosão Suína (Explosão Suína, Batata P, Refri 350ml)", price: 47.00, image: "/images/combo2.jpg", description: "Lanche explosão suína, batata individual pequena, refrigerante lata 350ml" },
+    { id: 6, name: "Combo Saladão Brutal (Saladão Brutal, Batata P, Refri 350ml)", price: 32.00, image: "/images/combo3.jpg", description: "Lanche saladão brutal, batata individual pequena, refrigerante lata 350ml" },
+    { id: 7, name: "Combo Mega Cheddar Melt", price: 38.00, image: "/images/combo_mega_chedder.jpg", description: "Mega Cheddar Melt, batata individual pequena, refrigerante lata 350ml" },
+    { id: 8, name: "Combo Smash Turbo Duplo", price: 52.00, image: "/images/combo_smash_turbo.jpg", description: "Smash Turbo Duplo, batata individual pequena, refrigerante lata 350ml" },
+    { id: 9, name: "Combo X- Clássico Burguer", price: 32.00, image: "/images/combo_x_classico.jpg", description: "X Clássico Burguer, batata individual pequena, refrigerante lata 350ml" },
+    { id: 10, name: "Combo Terra & Fogo", price: 51.00, image: "/images/combo_terra_fogo.jpg", description: "Burguer Terra & Fogo, batata individual pequena, refrigerante lata 350ml" }
   ],
   "Porções": [
     { id: 7, name: "Batata Frita P", price: 10.00, image: "/images/batata_p.jpg", description: "Porção individual pequena de batata frita" },
